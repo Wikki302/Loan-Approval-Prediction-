@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Srinivasan Financial Consulting | Loan Eligibility Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2a4365;
+            --secondary: #1e3a8a;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .brand-section {
+            flex: 1;
+            background: linear-gradient(to bottom right, var(--primary), var(--secondary));
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .brand-section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .brand-section::after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .logo-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .logo-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .logo-subtext {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 5px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        
+        .illustration {
+            width: 100%;
+            max-width: 300px;
+            margin: 40px 0;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .brand-section p {
+            font-size: 15px;
+            line-height: 1.6;
+            opacity: 0.9;
+            max-width: 350px;
+            margin-bottom: 30px;
+        }
+        
+        .form-container {
+            flex: 1;
+            padding: 60px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-header {
+            margin-bottom: 40px;
+        }
+        
+        .form-header h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .form-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s ease;
+            font-size: 15px;
+            background: #f8fafc;
+        }
+        
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 67, 101, 0.1);
+            outline: none;
+            background: white;
+        }
+        
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 67, 101, 0.2);
+        }
+        
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+            border: 1px solid #e2e8f0;
+            background: white;
+        }
+        
+        .success {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+        }
+        
+        .error {
+            border-color: var(--danger);
+            background: rgba(239, 68, 68, 0.05);
+        }
+        
+        .result-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .result-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+        
+        .success .result-icon {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+        }
+        
+        .error .result-icon {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .result-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+        
+        .result-message {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 20px;
+        }
+        
+        .confidence-meter {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+        
+        .confidence-level {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .success .confidence-level {
+            background: linear-gradient(to right, var(--success), #34d399);
+        }
+        
+        .error .confidence-level {
+            background: linear-gradient(to right, #f97316, var(--danger));
+        }
+        
+        .confidence-value {
+            font-size: 14px;
+            text-align: right;
+            color: #64748b;
+        }
+        
+        .confidence-value strong {
+            color: var(--dark);
+            font-size: 16px;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            cursor: pointer;
+            color: var(--accent);
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 220px;
+            background-color: var(--dark);
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            font-weight: normal;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .brand-section {
+                padding: 40px 30px;
+            }
+            
+            .form-container {
+                padding: 40px 30px;
+            }
+            
+            .illustration {
+                max-width: 220px;
+                margin: 30px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brand-section">
+            <div class="logo">
+                <div class="logo-icon">S</div>
+                <div class="logo-text">Srinivasan</div>
+                <div class="logo-subtext">Financial Consulting</div>
+            </div>
+            
+            <img src="https://img.freepik.com/free-vector/financial-consultant-analyzing-funds_74855-5279.jpg" alt="Financial Consulting" class="illustration">
+            
+            <p>Our advanced loan eligibility tool helps you understand your approval chances before you apply, saving you time and protecting your credit score.</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Loan Eligibility Calculator</h2>
+                <p>Complete this form to receive an instant assessment of your loan approval probability</p>
+            </div>
+            
+            <div class="form-group">
+                <label for="creditScore">Credit Score <span class="tooltip">?<span class="tooltiptext">FICO scores range from 300-850. Higher scores indicate better creditworthiness.</span></span></label>
+                <input type="number" id="creditScore" min="300" max="850" placeholder="Enter your credit score (300-850)">
+            </div>
+            
+            <div class="form-group">
+                <label for="income">Monthly Income (₹)</label>
+                <input type="number" id="income" min="0" placeholder="Your gross monthly income">
+            </div>
+            
+            <div class="form-group">
+                <label for="loanAmount">Loan Amount (₹)</label>
+                <input type="number" id="loanAmount" min="0" placeholder="Amount you wish to borrow">
+            </div>
+            
+            <div class="form-group">
+                <label for="loanTerm">Loan Term</label>
+                <select id="loanTerm">
+                    <option value="1">1 year</option>
+                    <option value="2">2 years</option>
+                    <option value="3">3 years</option>
+                    <option value="5" selected>5 years</option>
+                    <option value="7">7 years</option>
+                    <option value="10">10 years</option>
+                    <option value="15">15 years</option>
+                    <option value="20">20 years</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="employment">Employment Type</label>
+                <select id="employment">
+                    <option value="salaried">Salaried</option>
+                    <option value="self-employed">Self-Employed</option>
+                    <option value="professional">Professional (CA/Doctor/Lawyer)</option>
+                    <option value="business">Business Owner</option>
+                    <option value="retired">Retired</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="existingEmi">Existing EMI Obligations (₹)</label>
+                <input type="number" id="existingEmi" min="0" placeholder="Current monthly loan payments" value="0">
+            </div>
+            
+            <button class="btn" onclick="calculateEligibility()">Check Eligibility</button>
+            
+            <div id="result" class="result">
+                <div class="result-header">
+                    <div class="result-icon">
+                        <span id="result-icon">✓</span>
+                    </div>
+                    <div class="result-title" id="result-title">High Approval Probability</div>
+                </div>
+                <div class="result-message" id="result-message">Based on your financial profile, you have a strong chance of loan approval.</div>
+                <div class="confidence-meter">
+                    <div id="confidence-level" class="confidence-level" style="width: 0%"></div>
+                </div>
+                <div class="confidence-value">Confidence: <strong id="confidence-value">0</strong>%</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateEligibility() {
+            // Get input values
+            const creditScore = parseInt(document.getElementById('creditScore').value) || 0;
+            const income = parseInt(document.getElementById('income').value) || 0;
+            const loanAmount = parseInt(document.getElementById('loanAmount').value) || 0;
+            const loanTerm = parseInt(document.getElementById('loanTerm').value);
+            const employment = document.getElementById('employment').value;
+            const existingEmi = parseInt(document.getElementById('existingEmi').value) || 0;
+            
+            // Validate inputs
+            if (creditScore < 300 || creditScore > 850) {
+                alert('Please enter a valid credit score between 300-850');
+                return;
+            }
+            
+            if (income <= 0 || loanAmount <= 0) {
+                alert('Please enter valid income and loan amount');
+                return;
+            }
+            
+            // Calculate monthly obligations
+            const monthlyPayment = loanAmount / (loanTerm * 12);
+            const totalObligations = monthlyPayment + existingEmi;
+            const disposableIncome = income - totalObligations;
+            
+            // Calculate debt-to-income ratio
+            const dti = totalObligations / income;
+            
+            // Advanced prediction algorithm for financial consulting
+            let approvalScore = 0;
+            
+            // 1. Credit Score (30% weight)
+            approvalScore += (creditScore / 850) * 30;
+            
+            // 2. Debt-to-Income Ratio (25% weight)
+            if (dti < 0.3) approvalScore += 25;
+            else if (dti < 0.4) approvalScore += 15;
+            else if (dti < 0.5) approvalScore += 5;
+            
+            // 3. Employment Stability (20% weight)
+            const employmentWeights = {
+                'salaried': 20,
+                'professional': 18,
+                'business': 15,
+                'self-employed': 12,
+                'retired': 8
+            };
+            approvalScore += employmentWeights[employment] || 0;
+            
+            // 4. Loan-to-Income Ratio (15% weight)
+            const lti = loanAmount / (income * 12);
+            if (lti < 2) approvalScore += 15;
+            else if (lti < 3) approvalScore += 10;
+            else if (lti < 5) approvalScore += 5;
+            
+            // 5. Disposable Income (10% weight)
+            if (disposableIncome > income * 0.5) approvalScore += 10;
+            else if (disposableIncome > income * 0.3) approvalScore += 7;
+            else if (disposableIncome > income * 0.2) approvalScore += 3;
+            
+            // Calculate final confidence (0-100)
+            let confidence = Math.min(100, Math.max(0, approvalScore));
+            confidence = Math.round(confidence * 10) / 10; // Round to 1 decimal
+            
+            // Determine approval status
+            let approved = confidence >= 65;
+            let riskLevel = 'low';
+            
+            if (confidence >= 80) {
+                approved = true;
+                riskLevel = 'very low';
+            } else if (confidence >= 65) {
+                approved = true;
+                riskLevel = 'low';
+            } else if (confidence >= 50) {
+                approved = false;
+                riskLevel = 'medium';
+            } else {
+                approved = false;
+                riskLevel = 'high';
+            }
+            
+            // Display result
+            const resultDiv = document.getElementById('result');
+            const resultIcon = document.getElementById('result-icon');
+            const resultTitle = document.getElementById('result-title');
+            const resultMessage = document.getElementById('result-message');
+            const confidenceLevel = document.getElementById('confidence-level');
+            const confidenceValue = document.getElementById('confidence-value');
+            
+            if (approved) {
+                resultDiv.className = 'result success';
+                resultIcon.textContent = '✓';
+                resultTitle.textContent = 'High Approval Probability';
+                resultMessage.textContent = `Based on your financial profile (${riskLevel} risk), you have a strong chance of loan approval.`;
+            } else {
+                resultDiv.className = 'result error';
+                resultIcon.textContent = '!';
+                resultTitle.textContent = 'Approval Challenges';
+                resultMessage.textContent = `Your application may face challenges (${riskLevel} risk). Consider improving your financial profile or reducing the loan amount.`;
+            }
+            
+            confidenceLevel.style.width = confidence + '%';
+            confidenceValue.textContent = confidence;
+            
+            resultDiv.style.display = 'block';
+            
+            // Smooth scroll to result
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
